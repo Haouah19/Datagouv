@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+{% block menu_recherche %}
+  {% load static %}
+    <!-- Script -->
+      <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'js/menu.js' %}"></script>
+    <!-- F.I.N -->
+
+    <!-- MENU RECHERCHE -->
+    <div class="row">
+    <div class="col-sm-2">
+        <nav class="nav-side-menu">
+              <div class="brand">MENU RECHERCHE</div>
+                  <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+                  <div class="menu-list">
+                    <!-- Tout le bloque -->
+                    <ul id="menu-content" class="menu-content collapse out">
+
+                      <!--  Recherche Ecole -->
+                    <li  data-toggle="collapse" data-target="#products" class="collapsed">
+                          <a href="{% url 'home:recherche_ecole' %}"><i class="fa fa-book fa-lg"></i> Recherche école</a><span class="arrow"></span>
+                    </li>
+                      <ul class="sub-menu collapse" id="products">
+                        <li data-toggle="collapse" data-target="#libelle"><a href="{% url 'home:recherche_ecolelibelle' %}">Libellé</a></span></li>
+                        <li><a href="{% url 'home:recherche_ecoleuniv' %}">Université</a></li>
+                      </ul>
+                      <!-- F.I.N -->
+
+                      <!--  Recherche Promo -->
+                        <li data-toggle="collapse" data-target="#promo" class="collapsed">
+                          <a href="{% url 'home:recherche_promo' %}"><i class="fa fa-archive fa-lg"></i> Recherche promo</a><span class="arrow"></span>
+                        </li>
+                          <ul class="sub-menu collapse " id="promo">
+                            <li><a href="{% url 'home:recherche_etudiantetab' %}">Établissement</a></li>
+                            <li><a href="{% url 'home:recherche_etudiantcommune' %}">Siège</a></li>
+                          </ul>
+
+                      <!-- F.I.N -->
+
+                      <!--  Recherche Région -->
+                        <li data-toggle="collapse" data-target="#region" class="collapsed">
+                          <a href="{% url 'home:recherche_effectifregional' %}"><i class="fa fa-globe fa-lg"></i> Recheche région</a><span class="arrow"></span>
+                        </li>
+                          <ul class="sub-menu collapse " id="region">
+                            <li><a href="{% url 'home:recherche_effectif_commune' %}">Commune</a></span></li>
+                            <li><a href="{% url 'home:recherche_effectif_formation' %}">Formation</a></li>
+                          </ul>
+
+                      <!-- F.I.N -->
+
+                      <!--  Recherche Prime -->
+                        <li data-toggle="collapse" data-target="#prime" class="collapsed">
+                            <a href="{% url 'home:recherche_prime' %}"><i class="fa fa-envelope fa-lg"></i> Recheche prime</a><span class="arrow"></span>
+                        </li>
+                            <ul class="sub-menu collapse" id="prime">
+                              <li><a href="{% url 'home:recherche_primeben_etab' %}">Établissement</a></li>
+                              <li><a href="{% url 'home:recherche_primeben_region' %}">Région</a></li>
+                            </ul>
+
+                        <!--  Recherche Région -->
+                    </ul>
+                    <!-- F.I.N -->
+                </div>
+        </nav>
+      </div>
+
+      <!-- Formulaire -->
+      {% if request.path == "/recherche/"%}
+      <div class="col-sm-9">
+         <div class="panel panel-default">
+            <div class="panel-heading">Liste des écoles doctorales accréditées.</div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-6">
+                  <form action="{% url 'home:recherche_ecolefiltre_post' %}" method="post">
+                          {% csrf_token %}
+                  <table>{{ home_Ecoledoctorante }}</table>
+                </div>
+                <div class="col-sm-6">
+                    <strong>Remarque :</strong> Ce jeu de données provient d'un service public certifié.
+                    <br><br>
+                    <p>Ce jeu de données présente la liste exhaustive de toutes les écoles doctorales françaises accréditées par le Ministère de l'Éducation nationale, de l'Enseignement supérieur et de la Recherche. </p>
+                    <br><strong>Source : </strong>système d’information sur la recherche et les études doctorales (SIREDO) et Répertoire National des Structures de Recherche (RNSR). 
+                    <a href="https://www.data.gouv.fr/fr/datasets/liste-des-ecoles-doctorales-accreditees/"> Lien »</a> 
+                  </div>
+               </div>
+          </div>
+            <center>
+            <div class="panel-footer">
+            <button class="btn btn-primary btn-lg" type="submit">Rechercher »</button>
+            </center>
+            </form>
+            </div>
+         </div>
+
+
+         <div class="col-sm-2"></div>
+         <div class="col-sm-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">Effectifs d'étudiants inscrits dans les établissements publics sous tutelle du ministère en charge de l’Enseignement supérieur et de la Recherche.</div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-6">
+                    <form action="{% url 'home:recherche_promopost' %}" method="post">
+                              {% csrf_token %}
+                      <table>{{ home_etudiantuniversiteform }}</table>
+                    </div>
+                    <div class="col-sm-6">
+                        <strong>Remarque :</strong> Ce jeu de données provient d'un service public certifié.
+                        <br><br>
+                        Ce jeu de données présente les effectifs d'étudiants inscrits dans les établissements publics sous tutelle du ministère en charge de l’Enseignement supérieur de 2010-2011 à 2016-2017. 
+Les données sont tirées du système d'information sur le suivi de l'étudiant (SISE). <br>Les inscriptions sont observées à la date du 15 janvier, sauf pour l’université de la Nouvelle-Calédonie qui dispose d’un délai supplémentaire pour prendre en compte le calendrier australe.
+                        <a href="https://www.data.gouv.fr/fr/datasets/effectifs-d-etudiants-inscrits-dans-les-etablissements-publics-sous-tutelle-du-ministere-en-charge-d/"> Lien »</a> 
+                    </div>
+                </div>
+                </div>
+                <center>
+                <div class="panel-footer">
+                    <button class="btn btn-primary btn-lg" type="submit">Rechercher »</button>
+                </center>
+                    </form>
+                </div>
+            </div>
+        
+            
+            <div class="col-sm-2"></div>
+              <div class="col-sm-9">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">Effectifs d’étudiants inscrits dans les établissements et formations de l’enseignement supérieur.</div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-sm-6">
+                          <form action="{% url 'home:recherche_regionpost' %}" method="post">
+                                  {% csrf_token %}
+                          <table>{{ Effectifregionalfrom }}</table>
+                        </div>
+                          <div class="col-sm-6">
+                              <strong>Remarque :</strong> Ce jeu de données provient d'un service public certifié.
+                              <br>
+                              <br>
+                              Ce jeu de données présente les effectifs d’étudiants inscrits dans les établissements et les formations de l’enseignement supérieur, recensés pour les années 2001-2002 à 2012-13 dans les systèmes d’information et enquêtes du ministère de l’Éducation nationale, de l’Enseignement supérieur et de la Recherche, des ministères en charge de l’Agriculture, de la Pêche, de la Culture, de la Santé et des Sports.
+                              Il décline les informations à tous les niveaux géographiques, de la commune jusqu'au national.
+                              <br>
+                              <strong>Producteur : </strong> Ministère de l’Éducation nationale, de l’Enseignement supérieur et de la Recherche > Sous-direction des Systèmes d'information et études statistiques Atlas régional des effectifs d'étudiants : Effectifs d’étudiants inscrits dans les établissements et formations de l’enseignement supérieur par filières, par sexes et par secteurs d'établissement.
+                              <a href="https://www.data.gouv.fr/fr/datasets/effectifs-d-etudiants-inscrits-dans-les-etablissements-et-les-formations-de-l-enseignement-superie-0/#_"> Lien »</a> 
+      
+  
+                            </div>
+                      </div>
+                    </div>
+                      <center>
+                      <div class="panel-footer">
+                          <button class="btn btn-primary btn-lg" type="submit">Rechercher »</button>
+                      </center>
+                      </form>
+                      </div>
+                  </div>
+
+                  <div class="col-sm-2"></div>
+                    <div class="col-sm-9">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Les bénéficiaires de la prime d'excellence scientifique.</div>
+                            
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                <form action="{% url 'home:recherche_primepost' %}" method="post">
+                                        {% csrf_token %}
+                                <table>{{ home_benefprimeexcellenceform }}</table>
+                              </div>
+                              <div class="col-sm-6">
+                                <strong>Remarque : </strong> Ce jeu de données provient d'un service public certifié.
+                                <br>
+                                <br>
+                                 <p>À savoir, ce jeu de données présente les effectifs des bénéficiaires de la primed'excellence scientifique (ex prime d'encadrement doctoral et derecherche) par sexe, secteur CNU, corps et établissement.<br>
+                                <strong>La source de données :</strong><br>
+                                Jusqu'à 2008 inclus, les données correspondent à l'attribution de la prime d'encadrement doctoral et de recherche (PEDR) avant son remplacement en 2009 par la prime d'excellence scientifique (PES).Le dispositif de candidature à la prime est dématérialisé depuis la campagne 2007. La base de données de la plate-forme internet constitue la source de données de ce tableau de bord. Pour lesannées antérieures, les candidatures et résultats ont été intégrés à partir du système d'information SIREDO.
+                                    <a href="https://www.data.gouv.fr/fr/datasets/les-beneficiaires-de-la-prime-d-excellence-scientifique-mesr/"> Lien »</a>
+                                 </p>
+                              </div>
+                            </div>
+                          </div>
+                            <center>
+                            <div class="panel-footer">
+                                <button class="btn btn-primary btn-lg" type="submit">Rechercher »</button>
+                            </center>
+                            </form>
+                              </div>
+                          </div>
+           </div>
+          </div>
+       {% endif %}
+      <!-- F.I.N -->
+        
+        
+    <!-- F.I.N (MENU RECHERCHE)-->
+{% endblock menu_recherche %}
+{% block contenu_recherche %}
+
+<div class="col-sm-10">
+
+  <!-- Table : Prime, Affichage 25 -->
+    {% if list_prime %}
+    {% block recherche_prime %}
+    <h2>Liste des primes: </h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Établissements</th>
+          <th>Année</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in list_prime %}
+          <tr>
+            <td><a href="{% url 'home:idprime' i.id %}"><button type="button" class="btn btn-sm btn-primary">{{ i.id }}</button></a></td>
+            <td>{{ i.etablissement }}</td>
+            <td>{{ i.annee }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <center>
+    <p>
+      {% if precparcourdf %}
+      <a href="{% url 'home:recherche_prime' precparcourd precparcourdf %}">
+        <button type="button" class="btn btn-lg btn-primary">Precedent</button>
+      </a>
+      {% endif %}
+      <a href="{% url 'home:recherche_prime' idparcourd idparcourf %}">
+        <button type="button" class="btn btn-lg btn-primary">Suivant</button>
+      </a>
+    </p>
+  </center>
+    {% endblock %}
+    {% endif %}
+    <!-- F.I.N -->
+
+    <!-- Table : Effectif Régional, Affichage 25 -->
+    {% if list_fregion %}
+    {% block recherche_effectifregional %}
+    <h2>Liste des régions: </h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Formation ou Établissements</th>
+          <th>Emplacement</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in list_fregion %}
+          <tr>
+            <td><a href="{% url 'home:idregion' i.id %}"><button type="button" class="btn btn-sm btn-primary">{{ i.id }}</button></a></td>
+            <td>{{ i.rgp_formations_ou_etablissements }}</td>
+            <td>{{ i.geo_nom }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <center>
+    <p>
+      {% if precparcourdf %}
+      <a href="{% url 'home:recherche_effectifregional' precparcourd precparcourdf %}">
+        <button type="button" class="btn btn-lg btn-primary">Precedent</button>
+      </a>
+      {% endif %}
+      <a href="{% url 'home:recherche_effectifregional' idparcourd idparcourf %}">
+        <button type="button" class="btn btn-lg btn-primary">Suivant</button>
+      </a>
+    </p>
+    </center>    
+    {% endblock %}
+    {% endif %}
+    <!-- F.I.N -->
+
+     <!-- Table : Ecole Doctorante , Affichage 25 -->
+    {% if list_ecoledocto %}
+    {% block recherche_ecoledocto %}
+    <h2>Liste d'école doctorantes : </h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>numéro</th>
+          <th>libelle</th>
+          <th>université</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in list_ecoledocto %}
+          <tr>
+            <td><a href="{% url 'home:idecole' i.numero %}"><button type="button" class="btn btn-sm btn-primary">{{ i.numero }}</button></a></td>
+            <td>{{ i.libelle }}</td>
+            <td>{{ i.liste_tous_etablissements }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <center>
+    <p>
+    {% if precparcourdf %}
+      <a href="{% url 'home:recherche_ecole' precparcourd precparcourdf %}">
+        <button type="button" class="btn btn-lg btn-primary">Precedent</button>
+      </a>
+    {% endif %}
+    <a href="{% url 'home:recherche_ecole' idparcourd idparcourf %}">
+      <button type="button" class="btn btn-lg btn-primary">Suivant</button>
+    </a>
+    </p>
+  </center>
+    {% endblock %}
+    {% endif %}
+    <!-- F.I.N -->
+
+    <!-- Table : Etudiant Effectif , Affichage 25 -->
+    {% if list_promo %}
+    {% block recherche_promo %}
+    <h2>Liste des promotions : </h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Année</th>
+          <th>Discipline</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in list_promo %}
+          <tr>
+            <td><a href="{% url 'home:idpromo' i.id %}"><button type="button" class="btn btn-sm btn-primary">{{ i.id }}</button></a></td>
+            <td>{{ i.rentreeDate }}</td>
+            <td>{{ i.Discipline }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p>
+      <center>
+      {% if precparcourdf %}
+      <a href="{% url 'home:recherche_promo' precparcourd precparcourdf %}">
+        <button type="button" class="btn btn-lg btn-primary">Precedent</button>
+      </a>
+    {% endif %}
+    <a href="{% url 'home:recherche_promo' idparcourd idparcourf %}">
+    	<button type="button" class="btn btn-lg btn-primary">
+      	Suivant
+    	</button>
+    </a>
+    </p>
+  </center>
+    {% endblock %}
+    {% endif %}
+    <!-- F.I.N -->
+</div>
+
+</div>
+{% endblock contenu_recherche %}
+
+{% endblock content %}
+                

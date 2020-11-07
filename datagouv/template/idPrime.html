@@ -1,0 +1,70 @@
+{% extends "recherche.html" %}
+
+{% block contenu_recherche %}
+<div class="col-sm-10">
+<div class="container">
+    <div class="jumbotron">
+            <div class="container">
+              <!-- hey, et si on foutais des panels avec bootstrap ? ça pourrais rendre bien !  -->
+              <div class="row">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                 <div class="panel-title">Établissement :</div>
+                </div>
+              <div class="panel panel-body">
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="center">
+                    Nom : {{ ret.etablissement }} </div>
+                    </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-sm-6"> Académie de : {{ ret.academie }}</div>
+                <div class="col-sm-6"> Code académie : {{ ret.code_academie }}</div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="col-sm-6">Se situe en : {{ ret.region }} </div>
+                <div class="col-sm-6">Code géo : {{ ret.code_region }}</div>
+              </div>
+                </div>
+                </div>
+            </div>
+              <br/>
+              <div class="row">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                    <div class="panel-title">Personne</div>
+                  </div>
+                <div class="panel-body">
+                <div class="col-sm-4">Secteur : {{ ret.groupe_de_corps }}</div>
+                <div class="col-sm-2">Secteur : {{ ret.secteur_disciplinaire }}</div>
+                <div class="col-sm-2">Sexe : {{ ret.sexe }} </div>
+                <div class="col-sm-2">Année d'obtention prime : {{ ret.annee }}</div>
+                <div class="col-sm-2">Echelon : {{ ret.beneficiaires }}</div>
+                </div>
+                </div>
+              </div>
+              <br/>
+              <div class="row">
+                <div class="panel panel-warning">
+                  <div class="panel-heading">
+                    <div class="panel-title">Localisation</div>
+                  </div>
+                  <div class="panel-body">
+                    <div class="col-sm-4">{{ ret.pres }}</a></div>
+                    <div class="col-sm-4">Code PRES : {{ ret.code_pres }}</a></div>
+                    <div class="col-sm-4">Code UAI : {{ ret.code_uai }}</a></div>
+                  </div>
+                </div>
+              </div>
+              <br/>  
+            </div>
+   </div>
+   <br> 
+   <br>
+  </div>
+</div>
+</div>
+{% endblock contenu_recherche %}
