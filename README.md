@@ -1,7 +1,7 @@
-# datagouv
+# Datagouv
 
 
-datagouv est un projet de visualisation de base de donnée avec Django utilisant les données fournit par le gouverment sur data.gouv.fr .
+Datagouv est un projet de visualisation de base de donnée avec Django utilisant les données fournit par le gouverment sur data.gouv.fr.
 
 
 ## installation / dépendances
@@ -20,8 +20,6 @@ pip3 install -r requirements.txt
 
 ```
 source bin/activate
-
 cd datagouv
-
 python manage.py runserver
 ```
